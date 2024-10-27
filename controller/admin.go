@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"github.com/e421083458/go_gateway/dao"
 	"github.com/e421083458/go_gateway/dto"
+	"github.com/e421083458/go_gateway/golang_common/lib"
 	"github.com/e421083458/go_gateway/middleware"
 	"github.com/e421083458/go_gateway/public"
-	"github.com/e421083458/go_gateway/golang_common/lib"
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
@@ -29,7 +29,7 @@ func AdminRegister(group *gin.RouterGroup) {
 // @Produce  json
 // @Success 200 {object} middleware.Response{data=dto.AdminInfoOutput} "success"
 // @Router /admin/admin_info [get]
-func (adminlogin *AdminController) AdminInfo(c *gin.Context) {
+func (admin *AdminController) AdminInfo(c *gin.Context) {
 	sess := sessions.Default(c)
 	sessInfo := sess.Get(public.AdminSessionInfoKey)
 	adminSessionInfo := &dto.AdminSessionInfo{}
@@ -65,7 +65,7 @@ func (adminlogin *AdminController) AdminInfo(c *gin.Context) {
 // @Param body body dto.ChangePwdInput true "body"
 // @Success 200 {object} middleware.Response{data=string} "success"
 // @Router /admin/change_pwd [post]
-func (adminlogin *AdminController) ChangePwd(c *gin.Context) {
+func (admin *AdminController) ChangePwd(c *gin.Context) {
 	params := &dto.ChangePwdInput{}
 	if err := params.BindValidParam(c); err != nil {
 		middleware.ResponseError(c, 2000, err)
@@ -93,7 +93,7 @@ func (adminlogin *AdminController) ChangePwd(c *gin.Context) {
 		return
 	}
 	adminInfo := &dao.Admin{}
-	adminInfo, err = adminInfo.Find(c, tx, (&dao.Admin{UserName: adminSessionInfo.UserName}))
+	adminInfo, err = adminInfo.Find(c, tx, &dao.Admin{UserName: adminSessionInfo.UserName})
 	if err != nil {
 		middleware.ResponseError(c, 2002, err)
 		return

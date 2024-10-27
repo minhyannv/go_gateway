@@ -31,7 +31,6 @@ func main() {
 		flag.Usage()
 		os.Exit(1)
 	}
-
 	if *endpoint == "dashboard" {
 		lib.InitModule(*config)
 		defer lib.Destroy()

@@ -1,0 +1,30 @@
+  version: '3.8'
+
+  services:
+    mysql:
+      image: mysql:8
+      container_name: mysql_go_gateway
+      environment:
+        MYSQL_ROOT_PASSWORD: root  # 更改为您的根密码
+        MYSQL_DATABASE: go_gateway           # 默认数据库名称
+        MYSQL_USER: go_gateway                       # 创建的用户
+        MYSQL_PASSWORD: 8PKtAj9TDIuqAuAAL5w7          # 用户密码
+      ports:
+        - "3306:3306"
+      networks:
+        - go_gateway
+    redis:
+      image: redis:latest
+      container_name: redis_go_gateway
+      restart: always
+      environment:
+        - TZ=Asia/Shanghai
+      command: redis-server --requirepass 8PKtAj9TDIuqAuAAL5w7
+      ports:
+        - "6379:6379"
+      networks:
+        - go_gateway
+
+  networks:
+    go_gateway:
+      driver: bridge

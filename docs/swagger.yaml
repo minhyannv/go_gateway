@@ -743,7 +743,7 @@ paths:
     post:
       consumes:
       - application/json
-      description: 管理员登陆
+      description: 管理员登录
       operationId: /admin_login/login
       parameters:
       - description: body
@@ -764,7 +764,7 @@ paths:
                 data:
                   $ref: '#/definitions/dto.AdminLoginOutput'
               type: object
-      summary: 管理员登陆
+      summary: 管理员登录
       tags:
       - 管理员接口
   /admin_login/logout:

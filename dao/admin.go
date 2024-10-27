@@ -24,7 +24,7 @@ func (t *Admin) TableName() string {
 }
 
 func (t *Admin) LoginCheck(c *gin.Context, tx *gorm.DB, param *dto.AdminLoginInput) (*Admin, error) {
-	adminInfo, err := t.Find(c, tx, (&Admin{UserName: param.UserName, IsDelete: 0}))
+	adminInfo, err := t.Find(c, tx, &Admin{UserName: param.UserName, IsDelete: 0})
 	if err != nil {
 		return nil, errors.New("用户信息不存在")
 	}

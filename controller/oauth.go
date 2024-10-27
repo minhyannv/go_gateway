@@ -5,9 +5,9 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/e421083458/go_gateway/dao"
 	"github.com/e421083458/go_gateway/dto"
+	"github.com/e421083458/go_gateway/golang_common/lib"
 	"github.com/e421083458/go_gateway/middleware"
 	"github.com/e421083458/go_gateway/public"
-	"github.com/e421083458/go_gateway/golang_common/lib"
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
@@ -70,22 +70,22 @@ func (oauth *OAuthController) Tokens(c *gin.Context) {
 				Issuer:    appInfo.AppID,
 				ExpiresAt: time.Now().Add(public.JwtExpires * time.Second).In(lib.TimeLocation).Unix(),
 			}
-			token,err:=public.JwtEncode(claims)
+			token, err := public.JwtEncode(claims)
 			if err != nil {
 				middleware.ResponseError(c, 2004, err)
 				return
 			}
 			output := &dto.TokensOutput{
-				ExpiresIn:public.JwtExpires,
-				TokenType:"Bearer",
-				AccessToken:token,
-				Scope:"read_write",
+				ExpiresIn:   public.JwtExpires,
+				TokenType:   "Bearer",
+				AccessToken: token,
+				Scope:       "read_write",
 			}
 			middleware.ResponseSuccess(c, output)
 			return
 		}
 	}
-	middleware.ResponseError(c, 2005,errors.New("未匹配正确APP信息"))
+	middleware.ResponseError(c, 2005, errors.New("未匹配正确APP信息"))
 }
 
 // AdminLogin godoc
@@ -97,7 +97,7 @@ func (oauth *OAuthController) Tokens(c *gin.Context) {
 // @Produce  json
 // @Success 200 {object} middleware.Response{data=string} "success"
 // @Router /admin_login/logout [get]
-func (adminlogin *OAuthController) AdminLoginOut(c *gin.Context) {
+func (adminLogin *OAuthController) AdminLoginOut(c *gin.Context) {
 	sess := sessions.Default(c)
 	sess.Delete(public.AdminSessionInfoKey)
 	sess.Save()

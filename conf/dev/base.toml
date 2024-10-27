@@ -15,8 +15,8 @@
     ]
 
 [session]
-    redis_server = "127.0.0.1:6379"   #redis session server
-    redis_password = ""
+    redis_server = "39.100.68.202:6379"   #redis session server
+    redis_password = "8PKtAj9TDIuqAuAAL5w7"
 
 [log]
     log_level = "trace"         #日志打印最低级别

@@ -110,7 +110,7 @@ var doc = `{
         },
         "/admin_login/login": {
             "post": {
-                "description": "管理员登陆",
+                "description": "管理员登录",
                 "consumes": [
                     "application/json"
                 ],
@@ -120,7 +120,7 @@ var doc = `{
                 "tags": [
                     "管理员接口"
                 ],
-                "summary": "管理员登陆",
+                "summary": "管理员登录",
                 "operationId": "/admin_login/login",
                 "parameters": [
                     {

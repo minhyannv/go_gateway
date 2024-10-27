@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"github.com/e421083458/go_gateway/dao"
 	"github.com/e421083458/go_gateway/dto"
+	"github.com/e421083458/go_gateway/golang_common/lib"
 	"github.com/e421083458/go_gateway/middleware"
 	"github.com/e421083458/go_gateway/public"
-	"github.com/e421083458/go_gateway/golang_common/lib"
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
 	"strings"
@@ -21,11 +21,13 @@ func ServiceRegister(group *gin.RouterGroup) {
 	group.GET("/service_delete", service.ServiceDelete)
 	group.GET("/service_detail", service.ServiceDetail)
 	group.GET("/service_stat", service.ServiceStat)
+
 	group.POST("/service_add_http", service.ServiceAddHTTP)
 	group.POST("/service_update_http", service.ServiceUpdateHTTP)
 
 	group.POST("/service_add_tcp", service.ServiceAddTcp)
 	group.POST("/service_update_tcp", service.ServiceUpdateTcp)
+
 	group.POST("/service_add_grpc", service.ServiceAddGrpc)
 	group.POST("/service_update_grpc", service.ServiceUpdateGrpc)
 }
@@ -235,18 +237,18 @@ func (service *ServiceController) ServiceStat(c *gin.Context) {
 		return
 	}
 	todayList := []int64{}
-	currentTime:= time.Now()
+	currentTime := time.Now()
 	for i := 0; i <= currentTime.Hour(); i++ {
-		dateTime:=time.Date(currentTime.Year(),currentTime.Month(),currentTime.Day(),i,0,0,0,lib.TimeLocation)
-		hourData,_:=counter.GetHourData(dateTime)
+		dateTime := time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(), i, 0, 0, 0, lib.TimeLocation)
+		hourData, _ := counter.GetHourData(dateTime)
 		todayList = append(todayList, hourData)
 	}
 
 	yesterdayList := []int64{}
-	yesterTime:= currentTime.Add(-1*time.Duration(time.Hour*24))
+	yesterTime := currentTime.Add(-1 * time.Duration(time.Hour*24))
 	for i := 0; i <= 23; i++ {
-		dateTime:=time.Date(yesterTime.Year(),yesterTime.Month(),yesterTime.Day(),i,0,0,0,lib.TimeLocation)
-		hourData,_:=counter.GetHourData(dateTime)
+		dateTime := time.Date(yesterTime.Year(), yesterTime.Month(), yesterTime.Day(), i, 0, 0, 0, lib.TimeLocation)
+		hourData, _ := counter.GetHourData(dateTime)
 		yesterdayList = append(yesterdayList, hourData)
 	}
 	middleware.ResponseSuccess(c, &dto.ServiceStatOutput{
